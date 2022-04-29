@@ -25,6 +25,11 @@ module.exports = {
     compress: true,
     historyApiFallback: true,
   },
+  resolve: {
+    alias: {
+      'babel-runtime': 'babel-runtime-corejs3',
+    },
+  },
   module: {
     rules: [
       {
@@ -47,17 +52,17 @@ module.exports = {
           options: {
             presets: [['@babel/preset-env', { 
               "useBuiltIns": "usage",
-              "corejs": 3,
-              "targets": {
-                "browsers": [
-                  "edge >= 16",
-                  "safari >= 9",
-                  "firefox >= 57",
-                  "ie >= 10",
-                  "ios >= 9",
-                  "chrome >= 49"
-                ]
-              }
+              "corejs": "3.22.3",
+              // "targets": {
+              //   "browsers": [
+              //     "edge >= 18",
+              //     "safari >= 11.1",
+              //     "firefox >= 60",
+              //     "ie >= 11",
+              //     "ios >= 9",
+              //     "chrome >= 67"
+              //   ]
+              // }
             }], '@babel/preset-react']
           },
         },
@@ -69,7 +74,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new ESLintPlugin(),
+    new ESLintPlugin({
+      exclude: ['node_modules', 'dist'],
+      fix: true
+    }),
     new HtmlWebpackPlugin({
       title: 'Webpack App',
       filename: 'index.html',
